@@ -1,14 +1,10 @@
 import { IOClients } from '@vtex/api'
 
-import { BookClient } from './book'
-import { MarkdownClient } from './markdown'
+import { DocumentsNoCacheClient } from './document'
+
 
 export class Clients extends IOClients {
-  get book() {
-    return this.getOrSet('book', BookClient)
-  }
-
-  get markdown() {
-    return this.getOrSet('markdown', MarkdownClient)
+  get DocumentsNoCache() {
+    return this.getOrSet('DocumentsNoCache', DocumentsNoCacheClient)
   }
 }

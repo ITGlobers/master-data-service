@@ -1,12 +1,14 @@
 {
-  "name": "graphql-example",
-  "vendor": "vtex",
-  "version": "0.2.1",
-  "title": "GraphQL Example",
-  "description": "Reference app for VTEX IO GraphQL Services",
+  "name": "graphql-master-data",
+  "vendor": "itglobers",
+  "version": "0.0.1",
+  "title": "No cache master data",
+  "description": "This service uses master data cache",
   "mustUpdateAt": "2022-01-04",
   "categories": [],
-  "dependencies": {},
+  "dependencies": {
+    "vtex.store-graphql": "2.x"
+  },
   "builders": {
     "docs": "0.x",
     "graphql": "1.x",
@@ -25,6 +27,9 @@
     },
     {
       "name": "graphql-query"
+    },
+    {
+      "name": "vtex.store-graphql:resolve-graphql"
     }
   ],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
