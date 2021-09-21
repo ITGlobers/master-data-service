@@ -1,14 +1,15 @@
 {
   "name": "graphql-master-data",
   "vendor": "itglobers",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "title": "No cache master data",
   "description": "This service uses master data cache",
   "mustUpdateAt": "2022-01-04",
   "categories": [],
-  "dependencies": {
-    "vtex.store-graphql": "2.x"
+  "billingOptions": {
+    "free": true
   },
+  "dependencies": {},
   "builders": {
     "docs": "0.x",
     "graphql": "1.x",
@@ -30,6 +31,19 @@
     },
     {
       "name": "vtex.store-graphql:resolve-graphql"
+    },
+    {
+      "name": "POWER_USER_DS"
+    },
+    {
+      "name": "ADMIN_DS"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.vtex.com",
+        "path": "/api/dataentities/*"
+      }
     }
   ],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"

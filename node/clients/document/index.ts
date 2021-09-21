@@ -1,49 +1,63 @@
-import { InstanceOptions, IOContext, AppGraphQLClient } from '@vtex/api'
+import { InstanceOptions, IOContext, MasterData } from '@vtex/api'
 
-export class DocumentsNoCacheClient extends AppGraphQLClient {
+export class DocumentsNoCacheClient extends MasterData {
 
-  constructor (context: IOContext, options?: InstanceOptions) {
-    super('vtex.store-graphql@2.x', context, options)
+  constructor(context: IOContext, options?: InstanceOptions) {
+    super(context, {
+      ...options,
+      headers: {
+        ...(options && options.headers),
+        ...{ Accept: 'application/vnd.vtex.ds.v10+json' },
+        ...(context.adminUserAuthToken ? { VtexIdclientAutCookie: context.adminUserAuthToken } : null),
+        ...(context.storeUserAuthToken ? { VtexIdclientAutCookie: context.storeUserAuthToken } : null),
+        ...(context.authToken ? { VtexIdclientAutCookie: context.authToken } : null)
+      }
+    });
   }
-  public documentsNoCache (acronym: string, schema: string, fields: [string], where: string, pageSize: number, page: number) {
-    return this.graphql
-      .query<any, any>(
+  // acronym: string, schema: string, fields: [string], where: string, pageSize: number, page: number
+  public async documentsNoCache(
+    acronym: string,
+    schema: string,
+    fields: string[],
+    where: string,
+    pageSize: number = 1,
+    page: number = 1
+    ){
+    const response = await this.searchDocuments({
+      dataEntity: acronym,
+      fields,
+      where,
+      schema,
+      pagination: {
+        page,
+        pageSize
+      }
+    })
+
+    const fieldsData: any = this.parseData(response)
+
+    return {
+      documents: [
         {
-          query: `
-          query GetDocuments($acronym: String, $fields: [String], $schema: String, $where: String, $pageSize: Int, $page: Int){
-            documents(acronym: $acronym, fields: $fields, schema: $schema, where: $where, pageSize: $pageSize, page: $page)
-            {
-              fields {
-                key
-                value
-              }
-            }
-          }
-          `,
-          variables: {
-            "schema": schema,
-            "acronym": acronym,
-            "fields": fields,
-            "where": where,
-            "pageSize": pageSize,
-            "page": page
-          },
-        },
-        {
-          headers: {
-            ...this.options?.headers,
-            'Proxy-Authorization': this.context.authToken,
-            VtexIdclientAutCookie: this.context.authToken,
-          },
+          fields: fieldsData
         }
-      )
-      .then(( data: any) => {
-        console.log("Mi data es", data);
-        
-        return data.data
+      ]
+    }
+  }
+
+  private parseData(data: any){
+    let fields: any = []
+
+    data.map((item: any) => {
+      Object.keys(item).map(name => {
+        fields = [...fields, {
+          key: name,
+          value: item[name]
+        }]
       })
-      .catch((error) => {
-        return error
-      })
-  }   
+    })
+
+    return fields
+  }
 }
+
