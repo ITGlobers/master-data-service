@@ -14,7 +14,7 @@ export class DocumentsNoCacheClient extends MasterData {
       }
     });
   }
-  // acronym: string, schema: string, fields: [string], where: string, pageSize: number, page: number
+
   public async documentsNoCache(
     acronym: string,
     schema: string,
@@ -34,27 +34,33 @@ export class DocumentsNoCacheClient extends MasterData {
       }
     })
 
-    const fieldsData: any = this.parseData(response)
+    const documents: any = this.resolveDocuments(response)
 
     return {
-      documents: [
-        {
-          fields: fieldsData
-        }
-      ]
+      documents
     }
   }
 
-  private parseData(data: any){
+  private resolveDocuments(data: any){
     let fields: any = []
 
-    data.map((item: any) => {
-      Object.keys(item).map(name => {
-        fields = [...fields, {
-          key: name,
-          value: item[name]
-        }]
+    data.forEach((item: any) => {
+      fields.push({
+        fields: this.resolveFields(item)
       })
+    })
+
+    return fields
+  }
+
+  private resolveFields(item: any){
+    let fields: any = []
+
+    Object.keys(item).forEach((name: string) => {
+      fields = [...fields, {
+        key: name,
+        value: item[name]
+      }]
     })
 
     return fields

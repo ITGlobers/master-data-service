@@ -1,7 +1,7 @@
 {
   "name": "graphql-master-data",
   "vendor": "itglobers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "title": "No cache master data",
   "description": "This service uses master data cache",
   "mustUpdateAt": "2022-01-04",
@@ -28,9 +28,6 @@
     },
     {
       "name": "graphql-query"
-    },
-    {
-      "name": "vtex.store-graphql:resolve-graphql"
     },
     {
       "name": "POWER_USER_DS"
