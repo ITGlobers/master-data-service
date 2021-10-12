@@ -20,10 +20,10 @@ export class DocumentsNoCacheClient extends MasterData {
     schema: string,
     fields: string[],
     where: string,
-    pageSize: number = 1,
+    pageSize: number = 50,
     page: number = 1
     ){
-    const response = await this.searchDocuments({
+    const response = await this.searchDocumentsWithPaginationInfo({
       dataEntity: acronym,
       fields,
       where,
@@ -34,10 +34,11 @@ export class DocumentsNoCacheClient extends MasterData {
       }
     })
 
-    const documents: any = this.resolveDocuments(response)
+    const documents: any = this.resolveDocuments(response?.data)
 
     return {
-      documents
+      documents,
+      pagination: response?.pagination
     }
   }
 

@@ -13,7 +13,14 @@ type Document {
 }
 
 type DocumentNoCache {
-  documents: [Document]
+  documents: [Document],
+  pagination: Paginator!
+}
+
+type Paginator {
+  page: Int,
+  pageSize: Int,
+  total: Int
 }
 
 type Query {
