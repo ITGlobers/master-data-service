@@ -20,6 +20,7 @@ export class DocumentsNoCacheClient extends MasterData {
     schema: string,
     fields: string[],
     where: string,
+    sort: string,
     pageSize: number = 50,
     page: number = 1
     ){
@@ -28,6 +29,7 @@ export class DocumentsNoCacheClient extends MasterData {
       fields,
       where,
       schema,
+      sort: sort || 'createdIn DESC',
       pagination: {
         page,
         pageSize
