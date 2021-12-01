@@ -1,5 +1,13 @@
 import { InstanceOptions, IOContext, MasterData } from '@vtex/api'
 
+type DocumentInput = {
+  fields: [FieldsInput]
+}
+
+type FieldsInput = {
+  key: String
+  value: String
+}
 export class DocumentsNoCacheClient extends MasterData {
 
   constructor(context: IOContext, options?: InstanceOptions) {
@@ -15,6 +23,26 @@ export class DocumentsNoCacheClient extends MasterData {
     });
   }
 
+  public async createDocumentMD(
+    acronym: string,
+    document: DocumentInput,
+    schema: string
+  ){
+    try {
+      const response = await this.createDocument({
+        dataEntity: acronym,
+        fields: document,
+        schema: schema
+      })
+      console.log('response: ', response)
+
+      return response
+    } catch (error) {
+      console.log('errorrrr: ', error)
+      return error
+    }
+  }
+
   public async documentsNoCache(
     acronym: string,
     schema: string,
@@ -24,23 +52,27 @@ export class DocumentsNoCacheClient extends MasterData {
     pageSize: number = 50,
     page: number = 1
     ){
-    const response = await this.searchDocumentsWithPaginationInfo({
-      dataEntity: acronym,
-      fields,
-      where,
-      schema,
-      sort: sort || 'createdIn DESC',
-      pagination: {
-        page,
-        pageSize
+    try {
+      const response = await this.searchDocumentsWithPaginationInfo({
+        dataEntity: acronym,
+        fields,
+        where,
+        schema,
+        sort: sort || 'createdIn DESC',
+        pagination: {
+          page,
+          pageSize
+        }
+      })
+
+      const documents: any = this.resolveDocuments(response?.data)
+
+      return {
+        documents,
+        pagination: response?.pagination
       }
-    })
-
-    const documents: any = this.resolveDocuments(response?.data)
-
-    return {
-      documents,
-      pagination: response?.pagination
+    } catch (error) {
+      return {}
     }
   }
 
