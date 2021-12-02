@@ -28,7 +28,7 @@ export class DocumentsNoCacheClient extends MasterData {
     acronym: string,
     document: DocumentInput,
     schema: string
-  ){
+  ) {
     try {
       const fieldsPayload = await documentToField(document?.fields)
 
@@ -52,7 +52,7 @@ export class DocumentsNoCacheClient extends MasterData {
     sort: string,
     pageSize: number = 50,
     page: number = 1
-    ){
+  ) {
     try {
       const response = await this.searchDocumentsWithPaginationInfo({
         dataEntity: acronym,
@@ -74,6 +74,30 @@ export class DocumentsNoCacheClient extends MasterData {
       }
     } catch (error) {
       return {}
+    }
+  }
+
+  public async updateDocumentMD(
+    acronym: string,
+    id: string,
+    document: DocumentInput,
+    schema: string
+  ) {
+    try {
+      const fieldsPayload = await documentToField(document?.fields)
+
+      await this.updatePartialDocument({
+        dataEntity: acronym,
+        id: id,
+        fields: fieldsPayload,
+        schema: schema
+      })
+
+      return {
+        DocumentId: id
+      }
+    } catch (error) {
+      return error
     }
   }
 

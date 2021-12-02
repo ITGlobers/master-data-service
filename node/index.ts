@@ -8,6 +8,7 @@ import {
 import { Clients } from './clients'
 import { DocumentsNoCache } from './resolvers/documentsNoCache'
 import { CreateDocument } from './resolvers/createDocument'
+import { UpdateDocument } from './resolvers/updateDocument'
 
 const MEDIUM_TIMEOUT_MS = 2 * 1000
 
@@ -32,7 +33,8 @@ export default new Service<Clients, RecorderState, ParamsContext>({
         DocumentsNoCache
       },
       Mutation: {
-        CreateDocument
+        CreateDocument,
+        UpdateDocument
       }
     },
   },

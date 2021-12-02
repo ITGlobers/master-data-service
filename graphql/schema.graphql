@@ -38,6 +38,10 @@ type DocumentResponse {
   DocumentId: String
 }
 
+type DocumentResponseUpdate {
+  DocumentId: String
+}
+
 type Query {
   DocumentsNoCache(
     acronym: String
@@ -59,13 +63,13 @@ type Mutation {
 
   UpdateDocument(
     acronym: String!
+    id: ID
     document: DocumentInput
-    account: String
     schema: String
-  ): DocumentResponse @cacheControl(scope: PUBLIC, maxAge: ZERO)
+  ): DocumentResponseUpdate @cacheControl(scope: PUBLIC, maxAge: ZERO)
 
   DeleteDocument(
     acronym: String!
-    documentId:String
+    documentId: String
   ): DocumentResponse @cacheControl(scope: PUBLIC, maxAge: ZERO)
 }
