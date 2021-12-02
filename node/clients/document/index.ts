@@ -1,4 +1,5 @@
 import { InstanceOptions, IOContext, MasterData } from '@vtex/api'
+import { documentToField, fieldToDocument } from '../../utils'
 
 type DocumentInput = {
   fields: [FieldsInput]
@@ -29,16 +30,16 @@ export class DocumentsNoCacheClient extends MasterData {
     schema: string
   ){
     try {
+      const fieldsPayload = await documentToField(document?.fields)
+
       const response = await this.createDocument({
         dataEntity: acronym,
-        fields: document,
+        fields: fieldsPayload,
         schema: schema
       })
-      console.log('response: ', response)
 
       return response
     } catch (error) {
-      console.log('errorrrr: ', error)
       return error
     }
   }
@@ -65,7 +66,7 @@ export class DocumentsNoCacheClient extends MasterData {
         }
       })
 
-      const documents: any = this.resolveDocuments(response?.data)
+      const documents: any = fieldToDocument(response?.data)
 
       return {
         documents,
@@ -76,29 +77,5 @@ export class DocumentsNoCacheClient extends MasterData {
     }
   }
 
-  private resolveDocuments(data: any){
-    let fields: any = []
-
-    data.forEach((item: any) => {
-      fields.push({
-        fields: this.resolveFields(item)
-      })
-    })
-
-    return fields
-  }
-
-  private resolveFields(item: any){
-    let fields: any = []
-
-    Object.keys(item).forEach((name: string) => {
-      fields = [...fields, {
-        key: name,
-        value: item[name]
-      }]
-    })
-
-    return fields
-  }
 }
 

@@ -33,10 +33,9 @@ input DocumentInput{
 }
 
 type DocumentResponse {
-  cacheId: ID
-  id: String
-  href: String
-  documentId: String
+  Id: String
+  Href: String
+  DocumentId: String
 }
 
 type Query {
