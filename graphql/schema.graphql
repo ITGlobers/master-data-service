@@ -63,13 +63,13 @@ type Mutation {
 
   UpdateDocument(
     acronym: String!
-    id: ID
+    id: ID!
     document: DocumentInput
     schema: String
   ): DocumentResponseUpdate @cacheControl(scope: PUBLIC, maxAge: ZERO)
 
   DeleteDocument(
     acronym: String!
-    documentId: String
-  ): DocumentResponse @cacheControl(scope: PUBLIC, maxAge: ZERO)
+    documentId: String!
+  ): DocumentResponseUpdate @cacheControl(scope: PUBLIC, maxAge: ZERO)
 }

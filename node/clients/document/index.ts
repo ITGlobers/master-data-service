@@ -101,5 +101,23 @@ export class DocumentsNoCacheClient extends MasterData {
     }
   }
 
+  public async deleteDocumentMD(
+    acronym: string,
+    documentId: string
+  ) {
+    try {
+
+      await this.deleteDocument({
+        dataEntity: acronym,
+        id: documentId
+      })
+
+      return {
+        DocumentId: documentId
+      }
+    } catch (error) {
+      return error
+    }
+  }
 }
 
