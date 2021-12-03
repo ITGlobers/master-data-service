@@ -4,7 +4,12 @@
 # ref: http://graphql.org/graphql-js/mutations-and-input-types/
 
 type Fields {
-  key: String,
+  key: String
+  value: String
+}
+
+input FieldsInput {
+  key: String
   value: String
 }
 
@@ -14,8 +19,57 @@ type Document {
 
 type DocumentNoCache {
   documents: [Document]
+  pagination: Paginator!
+}
+
+type Paginator {
+  page: Int
+  pageSize: Int
+  total: Int
+}
+
+input DocumentInput{
+  fields: [FieldsInput]
+}
+
+type DocumentResponse {
+  Id: String
+  Href: String
+  DocumentId: String
+}
+
+type DocumentResponseUpdate {
+  DocumentId: String
 }
 
 type Query {
-  DocumentsNoCache(acronym: String, schema: String, fields: [String], where: String, pageSize: Int, page: Int): DocumentNoCache @cacheControl(scope: PUBLIC, maxAge: ZERO)
+  DocumentsNoCache(
+    acronym: String
+    schema: String
+    fields: [String]
+    where: String
+    sort: String
+    pageSize: Int
+    page: Int
+  ): DocumentNoCache @cacheControl(scope: PUBLIC, maxAge: ZERO)
+}
+
+type Mutation {
+  CreateDocument(
+    acronym: String!
+    document: DocumentInput
+    schema: String
+  ): DocumentResponse @cacheControl(scope: PUBLIC, maxAge: ZERO)
+
+  UpdateDocument(
+    acronym: String!
+    id: ID!
+    document: DocumentInput
+    schema: String
+  ): DocumentResponseUpdate @cacheControl(scope: PUBLIC, maxAge: ZERO)
+
+  DeleteDocument(
+    acronym: String!
+    documentId: String!
+  ): DocumentResponseUpdate @cacheControl(scope: PUBLIC, maxAge: ZERO)
 }
