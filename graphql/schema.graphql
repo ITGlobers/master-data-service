@@ -52,6 +52,11 @@ type Query {
     pageSize: Int
     page: Int
   ): DocumentNoCache @cacheControl(scope: PUBLIC, maxAge: ZERO)
+  GetDocument(
+    acronym: String
+    id: String
+    fields: [String]
+  ) : Document
 }
 
 type Mutation {

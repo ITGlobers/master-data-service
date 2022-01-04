@@ -1,5 +1,5 @@
 import { InstanceOptions, IOContext, MasterData } from '@vtex/api'
-import { documentToField, fieldToDocument } from '../../utils'
+import { documentToField, fieldToDocument, resolveFields } from '../../utils'
 
 type DocumentInput = {
   fields: [FieldsInput]
@@ -115,6 +115,30 @@ export class DocumentsNoCacheClient extends MasterData {
       return {
         DocumentId: documentId
       }
+    } catch (error) {
+      return error
+    }
+  }
+
+  public async getDocumentById(
+    acronym: string,
+    documentId: string,
+    fields: string[],
+  ) {
+    try {
+
+      const response: any = await this.getDocument({
+        dataEntity: acronym,
+        id: documentId,
+        fields
+      })
+
+      const document: any = resolveFields(response)
+
+      return {
+        fields: document
+      }
+
     } catch (error) {
       return error
     }

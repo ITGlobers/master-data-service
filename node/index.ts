@@ -10,6 +10,7 @@ import { DocumentsNoCache } from './resolvers/documentsNoCache'
 import { CreateDocument } from './resolvers/createDocument'
 import { UpdateDocument } from './resolvers/updateDocument'
 import { DeleteDocument } from './resolvers/deleteDocument'
+import { GetDocument } from './resolvers/getDocument'
 
 const MEDIUM_TIMEOUT_MS = 2 * 1000
 
@@ -31,7 +32,8 @@ export default new Service<Clients, RecorderState, ParamsContext>({
   graphql: {
     resolvers: {
       Query: {
-        DocumentsNoCache
+        DocumentsNoCache,
+        GetDocument
       },
       Mutation: {
         CreateDocument,
