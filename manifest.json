@@ -18,6 +18,27 @@
   "scripts": {
     "prereleasy": "bash lint.sh"
   },
+  "settingsSchema": {
+    "title": "Credenciales",
+    "type": "object",
+    "properties": {
+      "account": {
+        "title": "Account",
+        "description": "Account",
+        "type": "string"
+      },
+      "appkey": {
+        "title": "AppKey",
+        "description": "Api key",
+        "type": "string"
+      },
+      "apptoken": {
+        "title": "AppToken",
+        "description": "Api token",
+        "type": "string"
+      }
+    }
+  },
   "credentialType": "absolute",
   "policies": [
     {
