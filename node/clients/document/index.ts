@@ -12,7 +12,6 @@ type FieldsInput = {
 export class DocumentsNoCacheClient extends MasterData {
 
   constructor(context: IOContext, options?: InstanceOptions) {
-    console.log("context: ", context)
     super(context, {
       ...options,
       headers: {

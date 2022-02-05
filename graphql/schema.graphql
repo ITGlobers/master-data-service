@@ -19,7 +19,7 @@ type Document {
 
 type DocumentNoCache {
   documents: [Document]
-  pagination: Paginator!
+  pagination: Paginator
 }
 
 type Paginator {

@@ -10,5 +10,19 @@ type FieldsInput = {
 export const CreateDocument = async (
   _: any,
   { acronym, document, schema }: { acronym: string, document: DocumentInput, schema: string },
-  { clients: { DocumentsNoCache: documentsNoCacheClient } }: Context
-) => documentsNoCacheClient.createDocumentMD(acronym, document, schema)
+  ctx: Context
+) => {
+  const { clients: { DocumentsNoCache: documentsNoCacheClient, documentRestApi: documentRestApiClient, } }= ctx
+
+  const appId: any = process.env.VTEX_APP_ID;
+  const settings = await ctx.clients.apps.getAppSettings(appId);
+
+  if (settings.account && settings.appkey && settings.apptoken){
+    return documentRestApiClient.createDocumentMD(acronym, document, settings)
+  }else{
+    return documentsNoCacheClient.createDocumentMD(acronym, document, schema)
+  }
+
+  return null
+
+} 
