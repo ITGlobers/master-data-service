@@ -34,7 +34,7 @@ export class DocumentRestApiClient extends JanusClient {
     where: string = "",
     sort: string = "",
 		pageSize: number = 50,
-    settings: Settings
+    settings: Settings,
   ) {
     try {
       const response = await this.http.get(

@@ -8,6 +8,7 @@ export const DocumentsNoCache = async (
     sort,
     pageSize,
     page,
+    isExternal,
   }: {
     acronym: string;
     schema: string;
@@ -16,6 +17,7 @@ export const DocumentsNoCache = async (
     sort: string;
     pageSize: number;
     page: number;
+    isExternal: boolean
   },
   ctx: Context
 ) => {
@@ -29,7 +31,7 @@ export const DocumentsNoCache = async (
   const appId: any = process.env.VTEX_APP_ID;
   const settings = await ctx.clients.apps.getAppSettings(appId);
 
-  if (settings.account && settings.appkey && settings.apptoken) {
+  if (settings.account && settings.appkey && settings.apptoken && isExternal) {
     return documentRestApiClient.searchDocuments(
       acronym,
       schema,
