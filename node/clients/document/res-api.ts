@@ -38,7 +38,7 @@ export class DocumentRestApiClient extends JanusClient {
   ) {
     try {
       const response = await this.http.get(
-        `/api/dataentities/${acronym}/scroll?_size=${pageSize}&_fields=${fields}&_where=${where}&_schema=${schema}&_sort=${sort}`,
+        `/api/dataentities/${acronym}/search?_size=${pageSize}&_fields=${fields}&_where=${where}&_schema=${schema}&_sort=${sort}`,
         {
           headers: {
             "X-VTEX-API-AppKey": settings.appkey,
