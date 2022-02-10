@@ -52,7 +52,4 @@ export const DocumentsNoCache = async (
       page
     );
   }
-
-  return null
-
 };

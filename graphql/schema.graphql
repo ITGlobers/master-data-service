@@ -74,10 +74,12 @@ type Mutation {
     id: ID!
     document: DocumentInput
     schema: String
+    isExternal: Boolean
   ): DocumentResponseUpdate @cacheControl(scope: PUBLIC, maxAge: ZERO)
 
   DeleteDocument(
     acronym: String!
     documentId: String!
+    isExternal: Boolean
   ): DocumentResponseUpdate @cacheControl(scope: PUBLIC, maxAge: ZERO)
 }

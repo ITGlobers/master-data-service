@@ -3,7 +3,7 @@ export const GetDocument = async (
   { acronym, id, fields, isExternal}: { acronym: string, id: string, fields: [string], isExternal: boolean },
   ctx: Context
 ) => {
-  const { clients: { DocumentsNoCache: documentsNoCacheClient, documentRestApi: documentRestApiClient, } } = ctx
+  const { clients: { DocumentsNoCache: documentsNoCacheClient, documentRestApi: documentRestApiClient} } = ctx
 
   const appId: any = process.env.VTEX_APP_ID;
   const settings = await ctx.clients.apps.getAppSettings(appId);
@@ -13,6 +13,4 @@ export const GetDocument = async (
   } else {
     return documentsNoCacheClient.getDocumentById(acronym, id, fields)
   }
-
-  return null
 }

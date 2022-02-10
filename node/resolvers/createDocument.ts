@@ -22,7 +22,4 @@ export const CreateDocument = async (
   }else{
     return documentsNoCacheClient.createDocumentMD(acronym, document, schema)
   }
-
-  return null
-
 } 

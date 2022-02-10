@@ -124,4 +124,65 @@ export class DocumentRestApiClient extends JanusClient {
       return error;
     }
   }
+
+  public async updateDocumentMD(
+    acronym: string,
+    id: string,
+    document: DocumentInput,
+    settings: Settings
+  ) {
+    try {
+      const fieldsPayload = await documentToField(document?.fields);
+      await this.http.patch(
+        `/api/dataentities/${acronym}/documents/${id}`,
+        fieldsPayload,
+        {
+          headers: {
+            Accept: "application/vnd.vtex.ds.v10+json",
+            "Content-Type": "application/json",
+            "X-VTEX-API-AppKey": settings.appkey,
+            "X-VTEX-API-AppToken": settings.apptoken,
+          },
+          params: {
+            an: settings.account,
+          },
+        }
+      );
+      
+      return {
+        DocumentId: id
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+
+  public async deleteDocumentMD(
+    acronym: string,
+    documentId: string,
+    settings: Settings
+  ) {
+    try {
+      await this.http.delete(
+        `/api/dataentities/${acronym}/documents/${documentId}`,
+        {
+          headers: {
+            Accept: "application/vnd.vtex.ds.v10+json",
+            "Content-Type": "application/json",
+            "X-VTEX-API-AppKey": settings.appkey,
+            "X-VTEX-API-AppToken": settings.apptoken,
+          },
+          params: {
+            an: settings.account,
+          },
+        }
+      );
+
+      return {
+        DocumentId: documentId
+      }
+    } catch (error) {
+      return error;
+    }
+  }
 }
