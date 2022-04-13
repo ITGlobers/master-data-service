@@ -1,7 +1,7 @@
 {
   "name": "graphql-master-data",
   "vendor": "itglobers",
-  "version": "1.7.1",
+  "version": "1.7.5",
   "title": "No cache master data",
   "description": "This service uses master data cache",
   "mustUpdateAt": "2022-01-04",
@@ -59,6 +59,13 @@
     {
       "name": "outbound-access",
       "attrs": {
+        "host": "jumbocolombiaio.myvtex.com",
+        "path": "/api/dataentities/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
         "host": "api.vtex.com",
         "path": "/api/dataentities/*"
       }
@@ -73,7 +80,7 @@
     {
       "name": "outbound-access",
       "attrs": {
-        "host": "{{account}}.vtexcommercestable.com.br",
+        "host": "jumbocolombiaio.vtexcommercestable.com.br",
         "path": "/api/dataentities/*"
       }
     }
